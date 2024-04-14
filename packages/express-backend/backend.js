@@ -53,14 +53,13 @@ const addUser = (user) => {
     return user;
 };
 
-const delUser = (userId) => {
-    const index = users["users_list"].findIndex(user => user.id === userId);
+const delUser = (id) => {
+    const index = users["users_list"].findIndex((user) => user["id"] === id);
     if (index !== -1) {
-        const deletedUser = users["users_list"].splice(index, 1)[0];
-        return deletedUser;
-    } else {
-        return null; 
+        users["users_list"].splice(index, 1);
+        return true; // User deleted successfully
     }
+    return false; // User not found
 };
 
 app.use(express.json());
@@ -99,8 +98,12 @@ app.post("/users", (req, res) => {
 
 app.delete("/users/:id", (req, res) => {
     const id = req.params["id"]; //or req.params.id
-    delUser(id)
-    res.send()
+    const userDeleted = delUser(id);
+    if (userDeleted) {
+        res.send("User deleted successfully");
+    } else {
+        res.status(404).send("User not found");
+    }
 });
 
 app.listen(port, () => {
