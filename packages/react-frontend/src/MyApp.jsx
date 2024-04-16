@@ -28,7 +28,9 @@ function MyApp() {
         postUser(person)
             .then((response) => {
                 if (response.status === 201) {
-                    setCharacters([...characters, person]);
+                    response.json().then((newUser) => {
+                        setCharacters([...characters, newUser]);
+                    });
                 } else {
                     console.error('Failed to create user:', response.statusText);
                 }

@@ -57,16 +57,16 @@ const getRandId = () => {
 const addUser = (user) => {
     const newUser = {id: getRandId() , ...user};
     users["users_list"].push(newUser);
-    return user;
+    return newUser;
 };
 
 const delUser = (id) => {
     const index = users["users_list"].findIndex((user) => user["id"] === id);
     if (index !== -1) {
         users["users_list"].splice(index, 1);
-        return true; // User deleted successfully
+        return true; 
     }
-    return false; // User not found
+    return false;
 };
 
 app.use(cors());
@@ -101,8 +101,8 @@ app.get("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.status(201).send();
+    const newUser = addUser(userToAdd);
+    res.status(201).send(newUser);
 });
 
 app.delete("/users/:id", (req, res) => {
