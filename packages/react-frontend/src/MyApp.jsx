@@ -6,8 +6,8 @@ import Form from "./Form";
 function MyApp() {
     const [characters, setCharacters] = useState([]);
 
-    function delUser(index) {
-        const promise = fetch(`Http://localhost:8000/users/${index}`, {
+    function delUser(userid) {
+        const promise = fetch(`Http://localhost:8000/users/${userid}`, {
             method: "DELETE"
         });
         return promise
